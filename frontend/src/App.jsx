@@ -1,11 +1,17 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+
+import './App.css';
+import Main from './pages/Main/Main';
+import PageLayout from './hoc/PageLayout/PageLayout';
 
 function App() {
   return (
-    <>
-      <Switch></Switch>
-    </>
+    <PageLayout>
+      <Switch>
+        <Route path="/" component={Main} />
+      </Switch>
+    </PageLayout>
   );
 }
 

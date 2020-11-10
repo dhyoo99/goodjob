@@ -1,0 +1,16 @@
+.pageLayout {
+  height: 100%;
+  background-color: white;
+}
+
+.pageLayout .ant-layout-header {
+  background-color: #0984e3;
+  height: 100px;
+}
+
+.pageLayout .ant-layout-content {
+  height: 100%;
+  width: 70vw;
+  margin: 0 auto;
+  border: 1px solid #bbb;
+}
