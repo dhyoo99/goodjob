@@ -1,0 +1,38 @@
+.login {
+  width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 130px;
+}
+
+.business-login {
+  width: 700px;
+  margin: 0 auto;
+  margin-top: 130px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 20px;
+
+  @media (max-width: 650px) {
+    width: 90%;
+  }
+}
+
+.person-login {
+  margin: 0 auto;
+  margin-top: 130px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 20px;
+
+  @media (max-width: 650px) {
+    width: 90%;
+  }
+}
+
+#business-login-title {
+  text-align: center;
+}
+
+#person-login-title {
+  text-align: center;
+}
