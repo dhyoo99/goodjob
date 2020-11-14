@@ -4,11 +4,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver 
 from django.contrib.auth.models import User #user authentication
 
-# Profile class 안에 기업 / 개인 나눌지, 지금처럼 C_profile, P_profile로 나눌지..
+#Profile class 안에 기업 / 개인 나눌지 , 지금처럼 C_profile, P_profile로 나눌지..
 
  # 기업회원 프로필
 class C_profile(models.Model):
-    c_user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=20, blank=True)
     # 유저 기본적으로 생성되긴 하지만 우리가 필요한 것들이 뭐가 있을지?
 
@@ -52,10 +52,11 @@ class Notice(models.Model):
         return self.title
 
     def get(self, request): # 기업의 위치정보
-    try:
         longitude = float(request.GET.get('longitude', None))
         latitude  = float(request.GET.get('latitude', None))
         position  = (latitude,longitude)
+
+# 공고등록란이 기업회원에게만 뜨도록
 
 # 개인 회원들이 올리는 QNA
 class Qna(models.Model):
@@ -74,7 +75,7 @@ class Qna(models.Model):
         instance.Qna.save()
 
 # 커뮤니티에 올라오는 글
-class Feed(models.Model):
+class Post(models.Model):
     # id는 자동 추가
     title = models.CharField(max_length=256)
     content = models.TextField()
@@ -90,9 +91,9 @@ class Feed(models.Model):
         return self.title
 
 # 커뮤니티 댓글
-class FeedComment(models.Model):
+class PostComment(models.Model):
     content = models.TextField()
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    feed = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, null=True, on_delete= models.CASCADE)
 
