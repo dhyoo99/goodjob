@@ -56,7 +56,7 @@ class Notice(models.Model):
         latitude  = float(request.GET.get('latitude', None))
         position  = (latitude,longitude)
 
-# 공고등록란이 기업회원에게만 뜨도록
+# 공고등록란이 기업회원에게만 뜨도록 만들기
 
 # 개인 회원들이 올리는 QNA
 class Qna(models.Model):
