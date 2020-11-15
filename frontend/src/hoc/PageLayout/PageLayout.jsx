@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 
 import './PageLayout.scss';
-import HeaderCom from '../../components/Header/HeaderCom';
+import HeaderCom from '../../components/HeaderCom/HeaderCom';
 
 const { Header, Footer, Content } = Layout;
 

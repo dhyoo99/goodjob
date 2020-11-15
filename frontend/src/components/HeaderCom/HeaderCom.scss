@@ -28,19 +28,15 @@
           }
         }
       }
-      .header__inputBar {
-        height: 45px;
-        border-radius: 20px;
-        // padding: 0;
-        .ant-input-suffix {
-          width: 35px;
-          height: 35px;
-          background-color: blanchedalmond;
-          border-radius: 50%;
-          .anticon-search {
-            margin: 0 auto;
-          }
-        }
+      .ant-input,
+      .ant-input-search-button {
+        height: 35px;
+      }
+      .ant-input {
+        border-radius: 15px 0 0 15px;
+      }
+      .ant-input-search-button {
+        border-radius: 0 15px 15px 0;
       }
     }
   }
