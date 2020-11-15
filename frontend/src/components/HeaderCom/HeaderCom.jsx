@@ -10,8 +10,8 @@ const { Search } = Input;
 const Header = () => {
   // Layout
   // Logo
-  // TODO: InputBar
-  // TODO: Links
+  // InputBar
+  // Links
   // TODO: langButton
   // TODO: Category
 
