@@ -11,10 +11,6 @@
   box-sizing: border-box;
   border: 1px solid #ddd;
   padding: 20px;
-
-  @media (max-width: 650px) {
-    width: 90%;
-  }
 }
 
 .person-sign-up {
@@ -23,10 +19,6 @@
   box-sizing: border-box;
   border: 1px solid #ddd;
   padding: 20px;
-
-  @media (max-width: 650px) {
-    width: 90%;
-  }
 }
 
 #business-signup-title {
