@@ -1,0 +1,15 @@
+.pageLayout {
+  height: 100%;
+  background-color: white;
+  .ant-layout-header {
+    background-color: white;
+    height: 200px;
+    padding: 0;
+  }
+  .ant-layout-content {
+    height: 100%;
+    width: 70vw;
+    margin: 0 auto;
+    border: 1px solid #bbb;
+  }
+}
