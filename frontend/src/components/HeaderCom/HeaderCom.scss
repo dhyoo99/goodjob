@@ -1,7 +1,16 @@
 .header {
   height: 100%;
+  margin: 0 40px;
+  @media (max-width: 479px) {
+    margin: 0 15px;
+  }
   .ant-divider {
     margin: 0;
+  }
+  .ant-divider-horizontal {
+    @media (max-width: 479px) {
+      display: none;
+    }
   }
   .header__top {
     display: flex;
@@ -10,6 +19,9 @@
     max-width: 800px;
     margin: 0 auto;
     .header__top__left {
+      @media (max-width: 768px) {
+        display: none;
+      }
       flex: 0.2;
     }
     .header__top__right {
@@ -20,34 +32,61 @@
       .header__links {
         align-self: flex-end;
         width: fit-content;
+        @media (max-width: 479px) {
+          display: none;
+        }
         .ant-typography {
           margin: 0 10px;
           color: #bbb;
+          font-weight: 600;
           &:hover {
             color: black;
           }
         }
       }
-      .header__inputNbtn {
+      .header__btnContainer {
         display: flex;
-        .ant-dropdown-trigger {
-          height: 35px;
+        justify-content: space-between;
+        align-items: center;
+        height: 64px;
+        @media (min-width: 479px) {
+          display: none;
         }
-        .ant-input,
-        .ant-input-search-button {
-          height: 35px;
+        .header__userInfo {
+          width: 50px;
         }
-        .ant-input {
-          border-radius: 15px 0 0 15px;
-        }
-        .ant-input-search-button {
-          border-radius: 0 15px 15px 0;
-        }
+      }
+      .ant-input,
+      .ant-input-search-button {
+        height: 35px;
+      }
+      .ant-input {
+        border-radius: 15px 0 0 15px;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+      }
+      .ant-input-search-button {
+        border-radius: 0 15px 15px 0;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
       }
     }
   }
   .header__bottom {
     height: 30%;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    @media (max-width: 479px) {
+      display: none;
+      height: 0px;
+    }
+    .ant-space {
+      .ant-space-item {
+        padding-right: 40px;
+        cursor: pointer;
+        @media (max-width: 768px) {
+          padding-right: 10px;
+        }
+      }
+    }
   }
 }

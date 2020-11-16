@@ -26,6 +26,7 @@
     "object-curly-newline": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".jsx"] }],
     "react/destructuring-assignment": "off",
-    "react/prop-types": [2, { "ignore": ["children"] }]
+    "react/prop-types": [2, { "ignore": ["children"] }],
+    "react/jsx-one-expression-per-line": "off"
   }
 }
