@@ -4,7 +4,7 @@
   margin-bottom: 130px;
 }
 
-.business-login {
+.login {
   width: 700px;
   margin: 0 auto;
   margin-top: 130px;
@@ -13,18 +13,6 @@
   padding: 20px;
 }
 
-.person-login {
-  margin: 0 auto;
-  margin-top: 130px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  padding: 20px;
-}
-
-#business-login-title {
-  text-align: center;
-}
-
-#person-login-title {
+#login-title {
   text-align: center;
 }

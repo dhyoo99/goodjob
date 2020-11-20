@@ -1,8 +1,20 @@
-import React from 'react';
-import { Row, Col } from 'antd';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+// import LoginSelectTypeModal from '../../components/LoginSelectTypeModal';
+import SignUpSelectTypeModal from '../../components/SignUpSelectTypeModal/SignupSelectTypeModal';
 
 import './Login.css';
+
+const LoginWrapper = styled.div`
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 130px;
+  margin-bottom: 130px;
+
+  @media (max-width: 650px) {
+    width: 90%;
+  }
+`;
 
 export const LoginButton = styled.button`
   padding: 12px 11px;
@@ -13,7 +25,7 @@ export const LoginButton = styled.button`
   border: none;
   background-color: ${(props) => (props.color ? props.color : '#AAAAAA')};
   width: ${(props) => (props.width ? props.width : '100%')};
-  margin: ${(props) => (props.margin ? props.margin : '4px 0')};
+  margin-top: 50px;
   opacity: 0.8;
   :hover {
     opacity: ${(props) => !props.disabled && 1};
@@ -21,43 +33,36 @@ export const LoginButton = styled.button`
 `;
 
 export const LoginInput = styled.input`
-  padding: 11px;
-  border-radius: 4px;
-  color: rgb(50, 50, 50);
-  font-size: 16px;
-  outline: none;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
   width: ${(props) => (props.width ? props.width : '100%')};
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  margin: 4px 0;
-  border-color: ${(props) => props.invalid && '#ff395b'};
-  ::placeholder,
-  ::-webkit-input-placeholder {
-    color: #aaa;
-  }
-  :focus {
-    border-color: #008489;
-  }
+  margin-top: 20px;
 `;
 
 const Login = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <div className="login">
-      <Row>
-        <Col span={12} className="business-login">
-          <h1 id="business-login-title">기업 로그인</h1>
-          <LoginInput id="id-input" name="id" placeholder="아이디" />
-          <LoginInput id="pw-input" name="password" placeholder="비밀번호" />
-          <LoginButton>로그인</LoginButton>
-        </Col>
-        <Col span={12} className="person-login">
-          <h1 id="person-login-title">개인 로그인</h1>
-          <LoginInput id="id-input" name="id" placeholder="아이디" />
-          <LoginInput id="pw-input" name="password" placeholder="비밀번호" />
-          <LoginButton>로그인</LoginButton>
-        </Col>
-      </Row>
-    </div>
+    <LoginWrapper>
+      <h1 id="login-title">로그인</h1>
+      <LoginInput id="id-input" name="id" placeholder="username" />
+      <LoginInput id="pw-input" name="password" placeholder="password" />
+      <LoginButton onClick={handleModalOpen}>로그인</LoginButton>
+      {isModalOpen && (
+        <SignUpSelectTypeModal
+          open={isModalOpen}
+          handleClose={handleModalClose}
+        />
+      )}
+    </LoginWrapper>
   );
 };
 
