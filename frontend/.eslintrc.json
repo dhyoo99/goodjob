@@ -24,9 +24,11 @@
     "import/extensions": "off",
     "import/no-absolute-path": "off",
     "object-curly-newline": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".js"] }],
     "react/destructuring-assignment": "off",
-    "react/prop-types": [2, { "ignore": ["children"] }],
-    "react/jsx-one-expression-per-line": "off"
+    // "react/prop-types": [2, { "ignore": ["children"] }],
+    "react/prop-types": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "camelcase": "off"
   }
 }
