@@ -9,11 +9,11 @@ const Main = () => {
   return (
     <div>
       <Row>
-        <Col flex="auto">
-          <Map />
-        </Col>
         <Col flex="200px">
           <CategoryBar />
+        </Col>
+        <Col flex="auto">
+          <Map />
         </Col>
       </Row>
       <Divider />
