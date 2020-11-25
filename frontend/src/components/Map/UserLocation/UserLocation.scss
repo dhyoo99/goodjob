@@ -1,0 +1,20 @@
+.userLocation {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  background: none;
+  border: none;
+  &:hover,
+  &:focus {
+    background: none;
+    border: none;
+  }
+  [ant-click-animating-without-extra-node]:after {
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -o-animation: none !important;
+    -ms-animation: none !important;
+    animation: none !important;
+  }
+}
