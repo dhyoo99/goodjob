@@ -22,7 +22,7 @@ const Header = () => {
   // InputBar
   // Links
   // langButton
-  // TODO: Category
+  // Category
 
   return (
     <div className="header">
@@ -32,9 +32,9 @@ const Header = () => {
         </div>
         <div className="header__top__right">
           <div className="header__links">
-            <Link href="https://github.com/dhyoo99/goodjob/">로그인</Link>
+            <Link href="/login">로그인</Link>
             <Divider type="vertical" />
-            <Link href="https://github.com/dhyoo99/goodjob/">회원가입</Link>
+            <Link href="/signup">회원가입</Link>
             <Divider type="vertical" />
             <Link href="https://github.com/dhyoo99/goodjob/">마이페이지</Link>
             <Dropdown placement="bottomCenter" arrow overlay={langMenu}>
