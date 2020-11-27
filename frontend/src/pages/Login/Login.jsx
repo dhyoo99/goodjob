@@ -5,9 +5,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './Login.scss';
 
 const Login = () => {
-  const handleOnFinish = (values) => {
-    console.log(values);
-  };
+  const handleOnFinish = () => {};
 
   return (
     <div className="login">
@@ -65,7 +63,7 @@ const Login = () => {
             className="login-form-button"
           >
             Log in
-          </Button>
+          </Button>{' '}
           Or <a href="/signup">Sign up now!</a>
         </Form.Item>
       </Form>

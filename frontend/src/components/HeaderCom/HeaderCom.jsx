@@ -38,7 +38,7 @@ const Header = () => {
             <Divider type="vertical" />
             <Link href="https://github.com/dhyoo99/goodjob/">마이페이지</Link>
             <Dropdown placement="bottomCenter" arrow overlay={langMenu}>
-              <Button>나중에</Button>
+              <Button>Language</Button>
             </Dropdown>
           </div>
           <div className="header__btnContainer">
