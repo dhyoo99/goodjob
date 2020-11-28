@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Input, Tooltip, Checkbox, Button } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import './Signup.scss';
 
@@ -35,7 +37,10 @@ const tailFormItemLayout = {
   }
 };
 
-const Signup = () => {
+const Signup = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   const [form] = Form.useForm();
   const handleOnFinish = () => {};
   return (
@@ -198,4 +203,8 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(Signup);

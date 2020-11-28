@@ -1,6 +1,6 @@
 import axios from '../../service/axios-backend';
 
-import { LOGIN_FAILED, LOGIN_SUCCESS } from './types';
+import { LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT_SUCCESS } from './types';
 
 export const login = ({ username, password }) => async (dispatch) => {
   const body = JSON.stringify({ username, password });
@@ -14,4 +14,8 @@ export const login = ({ username, password }) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: LOGIN_FAILED });
   }
+};
+
+export const logout = () => async (dispatch) => {
+  dispatch({ type: LOGOUT_SUCCESS });
 };
