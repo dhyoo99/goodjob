@@ -4,7 +4,8 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import './Signup.scss';
+import './Register.scss';
+import { register } from '../../store/actions/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -17,10 +18,10 @@ const formItemLayout = {
   },
   wrapperCol: {
     sm: {
-      span: 24
+      span: 20
     },
     md: {
-      span: 16
+      span: 13
     }
   }
 };
@@ -37,18 +38,21 @@ const tailFormItemLayout = {
   }
 };
 
-const Signup = ({ isAuthenticated }) => {
+const Register = ({ isAuthenticated, register }) => {
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   const [form] = Form.useForm();
-  const handleOnFinish = () => {};
+  const handleOnFinish = (values) => {
+    register(values);
+  };
+
   return (
-    <div className="signup">
+    <div className="register">
       <Form
         {...formItemLayout}
         form={form}
-        name="signup"
+        name="register"
         onFinish={handleOnFinish}
         initialValues={{
           prefix: '86'
@@ -56,7 +60,7 @@ const Signup = ({ isAuthenticated }) => {
         scrollToFirstError
       >
         <Form.Item
-          name="firstname"
+          name="first_name"
           label="First Name"
           rules={[
             {
@@ -69,7 +73,7 @@ const Signup = ({ isAuthenticated }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="lastname"
+          name="last_name"
           label="Last Name"
           rules={[
             {
@@ -112,7 +116,7 @@ const Signup = ({ isAuthenticated }) => {
           rules={[
             {
               required: true,
-              message: 'Please input your nickname!',
+              message: 'Please input your username!',
               whitespace: true
             }
           ]}
@@ -162,7 +166,7 @@ const Signup = ({ isAuthenticated }) => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           name="phone"
           label="Phone Number"
           rules={[
@@ -173,7 +177,7 @@ const Signup = ({ isAuthenticated }) => {
           ]}
         >
           <Input />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           name="agreement"
@@ -207,4 +211,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps)(Signup);
+export default connect(mapStateToProps, { register })(Register);

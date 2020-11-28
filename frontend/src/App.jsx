@@ -5,14 +5,14 @@ import './App.css';
 import Main from './pages/Main/Main';
 import PageLayout from './hoc/PageLayout/PageLayout';
 import Login from './pages/Login/Login';
-import Signup from './pages/Signup/Signup';
+import Register from './pages/Register/Register';
 
 function App() {
   return (
     <PageLayout>
       <Switch>
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/register" component={Register} />
         <Route exact path="/" component={Main} />
       </Switch>
     </PageLayout>

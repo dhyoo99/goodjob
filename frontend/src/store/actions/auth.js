@@ -1,6 +1,12 @@
 import axios from '../../service/axios-backend';
 
-import { LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT_SUCCESS } from './types';
+import {
+  LOGIN_FAILED,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED
+} from './types';
 
 export const login = ({ username, password }) => async (dispatch) => {
   const body = JSON.stringify({ username, password });
@@ -18,4 +24,31 @@ export const login = ({ username, password }) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   dispatch({ type: LOGOUT_SUCCESS });
+};
+
+export const register = ({
+  first_name,
+  last_name,
+  email,
+  username,
+  password
+}) => async (dispatch) => {
+  const body = JSON.stringify({
+    first_name,
+    last_name,
+    email,
+    username,
+    password
+  });
+  try {
+    const res = await axios({
+      url: 'api/auth/register',
+      method: 'POST',
+      data: body
+    });
+    console.log(res.data);
+    dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+  } catch (err) {
+    dispatch({ type: REGISTER_FAILED });
+  }
 };
