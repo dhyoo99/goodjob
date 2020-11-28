@@ -1,11 +1,19 @@
 import React from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { login } from '../../store/actions/auth';
 
 import './Login.scss';
 
-const Login = () => {
-  const handleOnFinish = () => {};
+const Login = ({ isAuthenticated, login }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+  const handleOnFinish = (values) => {
+    login(values);
+  };
 
   return (
     <div className="login">
@@ -71,4 +79,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateProps, { login })(Login);

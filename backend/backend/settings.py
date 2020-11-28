@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "corsheaders",
     "knox",
     "accounts.apps.AccountsConfig",
     "app",
@@ -49,6 +50,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -64,7 +66,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, "frontend/build"),
+            os.path.join(BASE_DIR, "../frontend/build"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -131,5 +133,9 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/build/static"),
+    os.path.join(BASE_DIR, "../frontend/build/static"),
 ]
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:3001"]
+
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:3001"]
