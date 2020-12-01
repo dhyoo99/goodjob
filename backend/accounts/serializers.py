@@ -1,33 +1,50 @@
+# from django.contrib.auth.models import User
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from rest_framework import serializers
 
+from .models import CorporateUser
+from .models import IndividualUser
+
+# email 중복되는지 검사 필요
 User._meta.get_field("email")._unique = True
 
-# User Serializer
-class UserSerializer(serializers.ModelSerializer):
+
+# IndividualUser Serializer
+class IndividualUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ("id", "username", "email", "first_name", "last_name")
+        model = IndividualUser
+        fields = "__all__"
 
 
-# Register Serializer
-class RegisterSerializer(serializers.ModelSerializer):
+# CorporateUser Serializer
+class CorporateUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ("id", "username", "email", "password", "first_name", "last_name")
+        model = CorporateUser
+        fields = "__all__"
+
+
+# IndividualUser Register Serializer
+class IndividualUserRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IndividualUser
+        fields = "__all__"
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(
-            validated_data["username"],
-            validated_data["email"],
-            validated_data["password"],
-            first_name=validated_data["first_name"],
-            last_name=validated_data["last_name"],
-        )
-        return user
+        return IndividualUser.objects.create_user(**validated_data)
+
+
+# CorporateUser Register Serializer
+class CorporateUserRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CorporateUser
+        fields = "__all__"
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        return CorporateUser.objects.create_user(**validated_data)
 
 
 # Login Serializer

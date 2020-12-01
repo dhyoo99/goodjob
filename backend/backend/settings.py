@@ -139,3 +139,5 @@ STATICFILES_DIRS = [
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:3001"]
 
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://localhost:3001"]
+
+AUTH_USER_MODEL = "accounts.User"

@@ -22,6 +22,7 @@ from django.conf.urls import include
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html")),
     path("login", TemplateView.as_view(template_name="index.html")),
-    path("register", TemplateView.as_view(template_name="index.html")),
+    path("register-p", TemplateView.as_view(template_name="index.html")),
+    path("register-c", TemplateView.as_view(template_name="index.html")),
     path("api/auth/", include("accounts.urls")),
 ]
