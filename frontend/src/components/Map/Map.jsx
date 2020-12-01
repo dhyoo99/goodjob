@@ -54,7 +54,6 @@ const Map = () => {
 
   return (
     <div className="map">
-      <div className="map__title">Logo</div>
       <MapSearch panTo={panTo} />
       <UserLocation panTo={panTo} />
       <GoogleMap
