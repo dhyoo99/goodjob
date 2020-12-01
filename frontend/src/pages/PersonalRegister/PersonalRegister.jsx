@@ -46,7 +46,7 @@ const tailFormItemLayout = {
   }
 };
 
-const Register = ({ isAuthenticated, register }) => {
+const PersonalRegister = ({ isAuthenticated, register }) => {
   const [gender, setGender] = useState('male');
   if (isAuthenticated) {
     return <Redirect to="/" />;
@@ -238,4 +238,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { register })(PersonalRegister);
