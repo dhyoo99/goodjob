@@ -1,0 +1,14 @@
+{
+    "python.formatting.provider": "black",
+    "python.pythonPath": "/home/crazybirdz/anaconda3/envs/django_with_react/bin/python",
+    "python.linting.pylintArgs": [
+    "--load-plugins=pylint_django,pylint_celery",
+    "--disable=C0111,W0611,W0707,W0621,E1101"
+    ],
+    "python.formatting.blackPath": "/home/crazybirdz/anaconda3/envs/django_with_react/bin/black",
+    "python.formatting.blackArgs": ["--line-length", "100"],
+    "[python]": {
+        "editor.formatOnSave": true
+        // "editor.formatOnSaveTimeout": 3000
+    }
+}

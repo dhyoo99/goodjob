@@ -35,7 +35,11 @@
         @media (max-width: 479px) {
           display: none;
         }
-        .ant-typography {
+        .ant-btn-link {
+          padding: 0px;
+        }
+        .ant-typography,
+        .ant-btn-link > span {
           margin: 0 10px;
           color: #bbb;
           font-weight: 600;
