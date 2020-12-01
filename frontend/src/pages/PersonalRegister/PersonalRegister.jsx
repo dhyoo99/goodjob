@@ -1,10 +1,18 @@
-import React from 'react';
-import { Form, Input, Tooltip, Checkbox, Button } from 'antd';
+import React, { useState } from 'react';
+import {
+  Form,
+  Input,
+  Tooltip,
+  Radio,
+  Button,
+  DatePicker,
+  Checkbox
+} from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import './Register.scss';
+import './PersonalRegister.scss';
 import { register } from '../../store/actions/auth';
 
 const formItemLayout = {
@@ -39,12 +47,17 @@ const tailFormItemLayout = {
 };
 
 const Register = ({ isAuthenticated, register }) => {
+  const [gender, setGender] = useState('male');
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   const [form] = Form.useForm();
   const handleOnFinish = (values) => {
+    // console.log(values);
     register(values);
+  };
+  const handleGenderChanged = (e) => {
+    setGender(e.target.value);
   };
 
   return (
@@ -60,55 +73,11 @@ const Register = ({ isAuthenticated, register }) => {
         scrollToFirstError
       >
         <Form.Item
-          name="first_name"
-          label="First Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your firstname!',
-              whitespace: true
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="last_name"
-          label="Last Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your lastname!',
-              whitespace: true
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
-          label="E-mail"
-          rules={[
-            {
-              type: 'email',
-              message: 'The input is not valid E-mail!'
-            },
-            {
-              required: true,
-              message: 'Please input your E-mail!'
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
           name="username"
           label={
             <span>
               Username&nbsp;
-              <Tooltip title="What do you want others to call you?">
+              <Tooltip title="This is ID for authentication!">
                 <QuestionCircleOutlined />
               </Tooltip>
             </span>
@@ -165,20 +134,78 @@ const Register = ({ isAuthenticated, register }) => {
         >
           <Input.Password />
         </Form.Item>
-
-        {/* <Form.Item
-          name="phone"
-          label="Phone Number"
+        <Form.Item
+          name="first_name"
+          label="First Name"
           rules={[
             {
               required: true,
-              message: 'Please input your phone number!'
+              message: 'Please input your firstname!',
+              whitespace: true
             }
           ]}
         >
           <Input />
-        </Form.Item> */}
+        </Form.Item>
+        <Form.Item
+          name="last_name"
+          label="Last Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your lastname!',
+              whitespace: true
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
+        <Form.Item
+          name="email"
+          label="E-mail"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!'
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!'
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="birthday"
+          label="Birth Day"
+          rules={[
+            {
+              type: 'object',
+              required: true,
+              message: 'Please select your birthday!'
+            }
+          ]}
+        >
+          <DatePicker />
+        </Form.Item>
+        <Form.Item
+          name="gender"
+          label="Gender"
+          rules={[
+            {
+              required: true,
+              message: 'Please select your gender!'
+            }
+          ]}
+        >
+          <Radio.Group onChange={handleGenderChanged} value={gender}>
+            <Radio value="male">male</Radio>
+            <Radio value="female">female</Radio>
+          </Radio.Group>
+        </Form.Item>
         <Form.Item
           name="agreement"
           valuePropName="checked"
