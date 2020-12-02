@@ -10,10 +10,11 @@ import {
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+import moment from 'moment';
 
-import './PersonalRegister.scss';
-import { register } from '../../store/actions/auth';
+import './IndividualRegister.scss';
+import { individualRegister } from '../../store/actions/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -46,22 +47,27 @@ const tailFormItemLayout = {
   }
 };
 
-const PersonalRegister = ({ isAuthenticated, register }) => {
+const IndividualRegister = ({ isAuthenticated, individualRegister }) => {
+  const history = useHistory();
   const [gender, setGender] = useState('male');
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   const [form] = Form.useForm();
   const handleOnFinish = (values) => {
-    // console.log(values);
-    register(values);
+    values = {
+      ...values,
+      birth_date: moment(values.birth_date._d).format('YYYY-MM-DD')
+    };
+    individualRegister(values);
+    history.push('/');
   };
   const handleGenderChanged = (e) => {
     setGender(e.target.value);
   };
 
   return (
-    <div className="register">
+    <div className="individualRegister">
       <Form
         {...formItemLayout}
         form={form}
@@ -179,17 +185,16 @@ const PersonalRegister = ({ isAuthenticated, register }) => {
         </Form.Item>
 
         <Form.Item
-          name="birthday"
-          label="Birth Day"
+          name="birth_date"
+          label="Birth Date"
           rules={[
             {
-              type: 'object',
               required: true,
-              message: 'Please select your birthday!'
+              message: 'Please select your birthdate!'
             }
           ]}
         >
-          <DatePicker />
+          <DatePicker format="YYYY-MM-DD" />
         </Form.Item>
         <Form.Item
           name="gender"
@@ -238,4 +243,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { register })(PersonalRegister);
+export default connect(mapStateToProps, { individualRegister })(
+  IndividualRegister
+);

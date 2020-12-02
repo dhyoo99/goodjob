@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import './CorporateRegister.scss';
-import { register } from '../../store/actions/auth';
+import { individualRegister } from '../../store/actions/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -38,14 +38,14 @@ const tailFormItemLayout = {
   }
 };
 
-const Register = ({ isAuthenticated, register }) => {
+const CorporateRegister = ({ isAuthenticated, individualRegister }) => {
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   const [form] = Form.useForm();
   const handleOnFinish = (values) => {
     // console.log(values);
-    register(values);
+    individualRegister(values);
   };
 
   return (
@@ -224,4 +224,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { individualRegister })(
+  CorporateRegister
+);
