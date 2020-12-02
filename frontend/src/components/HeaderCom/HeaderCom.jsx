@@ -1,5 +1,14 @@
-import React from 'react';
-import { Divider, Input, Typography, Dropdown, Button, Menu } from 'antd';
+import React, { useState } from 'react';
+import {
+  Divider,
+  Input,
+  Typography,
+  Dropdown,
+  Button,
+  Menu,
+  Modal,
+  Card
+} from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
@@ -7,8 +16,9 @@ import './HeaderCom.scss';
 import Logo from '../Logo/Logo';
 import MenuBar from './MenuBar/MenuBar';
 import { logout } from '../../store/actions/auth';
+import { useHistory } from 'react-router-dom';
 
-const { Link } = Typography;
+const { Title, Link } = Typography;
 const { Search } = Input;
 
 const langMenu = (
@@ -19,11 +29,56 @@ const langMenu = (
 );
 
 const Header = ({ isAuthenticated, logout }) => {
+  const [visible, setVisible] = useState(false);
+  const history = useHistory();
+
+  const handleShowModal = () => {
+    setVisible(true);
+  };
+  const handleCancelModal = () => {
+    setVisible(false);
+  };
+  const handlePersonClicked = () => {
+    history.push('/register-i');
+    handleCancelModal();
+  };
+  const handleCorporateClicked = () => {
+    history.push('/register-c');
+    handleCancelModal();
+  };
+
   const authState = !isAuthenticated ? (
     <>
       <Link href="/login">로그인</Link>
       <Divider type="vertical" />
-      <Link href="/register">회원가입</Link>
+      <Button type="link" onClick={handleShowModal}>
+        회원가입
+      </Button>
+      <Modal
+        visible={visible}
+        title="유형을 골라주세요(개인/기업)"
+        onCancel={handleCancelModal}
+        footer={[
+          <Button key="back" danger type="primary" onClick={handleCancelModal}>
+            Return
+          </Button>
+        ]}
+      >
+        <div className="cardContainer">
+          <Card>
+            <Title style={{ textAlign: 'center' }}>개인</Title>
+            <Button type="link" onClick={handlePersonClicked}>
+              개인유형으로!
+            </Button>
+          </Card>
+          <Card>
+            <Title style={{ textAlign: 'center' }}>기업</Title>
+            <Button type="link" onClick={handleCorporateClicked}>
+              기업유형으로!
+            </Button>
+          </Card>
+        </div>
+      </Modal>
     </>
   ) : (
     <>
@@ -43,7 +98,7 @@ const Header = ({ isAuthenticated, logout }) => {
           <div className="header__links">
             {authState}
             <Divider type="vertical" />
-            <Link href="https://github.com/dhyoo99/goodjob/">마이페이지</Link>
+            <Link href="/user-detail">마이페이지</Link>
             <Dropdown placement="bottomCenter" arrow overlay={langMenu}>
               <Button>Language</Button>
             </Dropdown>

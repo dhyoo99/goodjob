@@ -1,11 +1,10 @@
 import React from 'react';
-import { Form, Input, Tooltip, Checkbox, Button } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
-import './Register.scss';
-import { register } from '../../store/actions/auth';
+import './CorporateRegister.scss';
+import { corporateRegister } from '../../store/actions/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -13,6 +12,12 @@ const formItemLayout = {
       span: 24
     },
     md: {
+      span: 8
+    },
+    lg: {
+      span: 7
+    },
+    xl: {
       span: 6
     }
   },
@@ -38,13 +43,17 @@ const tailFormItemLayout = {
   }
 };
 
-const Register = ({ isAuthenticated, register }) => {
+const CorporateRegister = ({ isAuthenticated, corporateRegister }) => {
+  const history = useHistory();
+
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   const [form] = Form.useForm();
   const handleOnFinish = (values) => {
-    register(values);
+    // console.log(values);
+    corporateRegister(values);
+    history.push('/');
   };
 
   return (
@@ -60,33 +69,6 @@ const Register = ({ isAuthenticated, register }) => {
         scrollToFirstError
       >
         <Form.Item
-          name="first_name"
-          label="First Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your firstname!',
-              whitespace: true
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="last_name"
-          label="Last Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your lastname!',
-              whitespace: true
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
           name="email"
           label="E-mail"
           rules={[
@@ -97,27 +79,6 @@ const Register = ({ isAuthenticated, register }) => {
             {
               required: true,
               message: 'Please input your E-mail!'
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="username"
-          label={
-            <span>
-              Username&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <QuestionCircleOutlined />
-              </Tooltip>
-            </span>
-          }
-          rules={[
-            {
-              required: true,
-              message: 'Please input your username!',
-              whitespace: true
             }
           ]}
         >
@@ -165,20 +126,59 @@ const Register = ({ isAuthenticated, register }) => {
         >
           <Input.Password />
         </Form.Item>
-
-        {/* <Form.Item
-          name="phone"
-          label="Phone Number"
+        <Form.Item
+          name="first_name"
+          label="First Name"
           rules={[
             {
               required: true,
-              message: 'Please input your phone number!'
+              message: 'Please input your firstname!',
+              whitespace: true
             }
           ]}
         >
           <Input />
-        </Form.Item> */}
+        </Form.Item>
+        <Form.Item
+          name="last_name"
+          label="Last Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your lastname!',
+              whitespace: true
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
+        <Form.Item
+          name="company_name"
+          label="Company Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your company name!',
+              whitespace: true
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="company_registration_number"
+          label="Company Registration Number"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your company registration number!',
+              whitespace: false
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
         <Form.Item
           name="agreement"
           valuePropName="checked"
@@ -211,4 +211,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { corporateRegister })(
+  CorporateRegister
+);
