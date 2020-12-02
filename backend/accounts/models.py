@@ -36,7 +36,6 @@ class CorporateUserManager(BaseUserManager):
         first_name,
         last_name,
         email,
-        username,
         company_registration_number,
         company_name,
         agreement,
@@ -48,7 +47,6 @@ class CorporateUserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             email=self.normalize_email(email),
-            username=username,
             company_registration_number=company_registration_number,
             company_name=company_name,
             agreement=agreement,
@@ -62,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(db_index=True, unique=True)
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, null=True)
     password = models.CharField(validators=[MinLengthValidator(4)], max_length=20)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -109,7 +107,7 @@ class IndividualUser(User, PermissionsMixin):
 
 
 class CorporateUser(User, PermissionsMixin):
-    company_registration_number = models.IntegerField()
+    company_registration_number = models.CharField(max_length=100)
     company_name = models.CharField(max_length=100)
     agreement = models.BooleanField(null=True)
 

@@ -79,10 +79,10 @@ const IndividualRegister = ({ isAuthenticated, individualRegister }) => {
         scrollToFirstError
       >
         <Form.Item
-          name="username"
+          name="email"
           label={
             <span>
-              Username&nbsp;
+              Email&nbsp;
               <Tooltip title="This is ID for authentication!">
                 <QuestionCircleOutlined />
               </Tooltip>
@@ -90,9 +90,12 @@ const IndividualRegister = ({ isAuthenticated, individualRegister }) => {
           }
           rules={[
             {
+              type: 'email',
+              message: 'The input is not valid E-mail!'
+            },
+            {
               required: true,
-              message: 'Please input your username!',
-              whitespace: true
+              message: 'Please input your E-mail!'
             }
           ]}
         >
@@ -140,6 +143,28 @@ const IndividualRegister = ({ isAuthenticated, individualRegister }) => {
         >
           <Input.Password />
         </Form.Item>
+
+        <Form.Item
+          name="username"
+          label={
+            <span>
+              Username&nbsp;
+              <Tooltip title="What do you want others to call you?">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </span>
+          }
+          rules={[
+            {
+              required: true,
+              message: 'Please input your username!',
+              whitespace: true
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
         <Form.Item
           name="first_name"
           label="First Name"
@@ -168,29 +193,12 @@ const IndividualRegister = ({ isAuthenticated, individualRegister }) => {
         </Form.Item>
 
         <Form.Item
-          name="email"
-          label="E-mail"
-          rules={[
-            {
-              type: 'email',
-              message: 'The input is not valid E-mail!'
-            },
-            {
-              required: true,
-              message: 'Please input your E-mail!'
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
           name="birth_date"
           label="Birth Date"
           rules={[
             {
               required: true,
-              message: 'Please select your birthdate!'
+              message: 'Please select your birth date!'
             }
           ]}
         >

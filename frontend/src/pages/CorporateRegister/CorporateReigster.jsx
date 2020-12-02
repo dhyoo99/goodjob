@@ -1,11 +1,10 @@
 import React from 'react';
-import { Form, Input, Tooltip, Button, Checkbox } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import './CorporateRegister.scss';
-import { individualRegister } from '../../store/actions/auth';
+import { corporateRegister } from '../../store/actions/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -13,6 +12,12 @@ const formItemLayout = {
       span: 24
     },
     md: {
+      span: 8
+    },
+    lg: {
+      span: 7
+    },
+    xl: {
       span: 6
     }
   },
@@ -38,14 +43,17 @@ const tailFormItemLayout = {
   }
 };
 
-const CorporateRegister = ({ isAuthenticated, individualRegister }) => {
+const CorporateRegister = ({ isAuthenticated, corporateRegister }) => {
+  const history = useHistory();
+
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
   const [form] = Form.useForm();
   const handleOnFinish = (values) => {
     // console.log(values);
-    individualRegister(values);
+    corporateRegister(values);
+    history.push('/');
   };
 
   return (
@@ -61,20 +69,16 @@ const CorporateRegister = ({ isAuthenticated, individualRegister }) => {
         scrollToFirstError
       >
         <Form.Item
-          name="username"
-          label={
-            <span>
-              Username&nbsp;
-              <Tooltip title="This is ID for authentication!">
-                <QuestionCircleOutlined />
-              </Tooltip>
-            </span>
-          }
+          name="email"
+          label="E-mail"
           rules={[
             {
+              type: 'email',
+              message: 'The input is not valid E-mail!'
+            },
+            {
               required: true,
-              message: 'Please input your username!',
-              whitespace: true
+              message: 'Please input your E-mail!'
             }
           ]}
         >
@@ -123,32 +127,6 @@ const CorporateRegister = ({ isAuthenticated, individualRegister }) => {
           <Input.Password />
         </Form.Item>
         <Form.Item
-          name="company_name"
-          label="Company Name"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your company name!',
-              whitespace: true
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="company-registration-number"
-          label="Company Registration Number"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your company registration number!',
-              whitespace: false
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
           name="first_name"
           label="First Name"
           rules={[
@@ -176,22 +154,31 @@ const CorporateRegister = ({ isAuthenticated, individualRegister }) => {
         </Form.Item>
 
         <Form.Item
-          name="email"
-          label="E-mail"
+          name="company_name"
+          label="Company Name"
           rules={[
             {
-              type: 'email',
-              message: 'The input is not valid E-mail!'
-            },
-            {
               required: true,
-              message: 'Please input your E-mail!'
+              message: 'Please input your company name!',
+              whitespace: true
             }
           ]}
         >
           <Input />
         </Form.Item>
-
+        <Form.Item
+          name="company_registration_number"
+          label="Company Registration Number"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your company registration number!',
+              whitespace: false
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
         <Form.Item
           name="agreement"
           valuePropName="checked"
@@ -224,6 +211,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { individualRegister })(
+export default connect(mapStateToProps, { corporateRegister })(
   CorporateRegister
 );

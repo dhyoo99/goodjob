@@ -39,7 +39,7 @@ const Header = ({ isAuthenticated, logout }) => {
     setVisible(false);
   };
   const handlePersonClicked = () => {
-    history.push('/register-p');
+    history.push('/register-i');
     handleCancelModal();
   };
   const handleCorporateClicked = () => {
