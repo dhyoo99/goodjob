@@ -1,13 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Radio,
-  Button,
-  DatePicker,
-  Checkbox
-} from 'antd';
+import React from 'react';
+import { Form, Input, Tooltip, Button, Checkbox } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -47,7 +39,6 @@ const tailFormItemLayout = {
 };
 
 const Register = ({ isAuthenticated, register }) => {
-  const [gender, setGender] = useState('male');
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
@@ -55,9 +46,6 @@ const Register = ({ isAuthenticated, register }) => {
   const handleOnFinish = (values) => {
     // console.log(values);
     register(values);
-  };
-  const handleGenderChanged = (e) => {
-    setGender(e.target.value);
   };
 
   return (
@@ -161,12 +149,25 @@ const Register = ({ isAuthenticated, register }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="representative-name"
-          label="Representative Name"
+          name="first_name"
+          label="First Name"
           rules={[
             {
               required: true,
-              message: 'Please input your representative name!',
+              message: 'Please input your firstname!',
+              whitespace: true
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="last_name"
+          label="Last Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your lastname!',
               whitespace: true
             }
           ]}
@@ -191,34 +192,6 @@ const Register = ({ isAuthenticated, register }) => {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          name="birthday"
-          label="Birth Day"
-          rules={[
-            {
-              type: 'object',
-              required: true,
-              message: 'Please select your birthday!'
-            }
-          ]}
-        >
-          <DatePicker />
-        </Form.Item>
-        <Form.Item
-          name="gender"
-          label="Gender"
-          rules={[
-            {
-              required: true,
-              message: 'Please select your gender!'
-            }
-          ]}
-        >
-          <Radio.Group onChange={handleGenderChanged} value={gender}>
-            <Radio value="male">male</Radio>
-            <Radio value="female">female</Radio>
-          </Radio.Group>
-        </Form.Item>
         <Form.Item
           name="agreement"
           valuePropName="checked"
