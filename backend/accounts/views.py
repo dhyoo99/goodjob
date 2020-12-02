@@ -20,13 +20,7 @@ class IndividualUserRegisterAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response(
-            {
-                "user": IndividualUserSerializer(user, context=self.get_serializer_context()).data,
-                "token": AuthToken.objects.create(user)[1],
-            }
-        )
+        return Response(serializer.validated_data)
 
 
 class CorporateUserRegisterAPIView(generics.GenericAPIView):
@@ -35,13 +29,7 @@ class CorporateUserRegisterAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response(
-            {
-                "user": CorporateUserSerializer(user, context=self.get_serializer_context()).data,
-                "token": AuthToken.objects.create(user)[1],
-            }
-        )
+        return Response(serializer.validated_data)
 
 
 # Login API
@@ -51,13 +39,7 @@ class LoginAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        return Response(
-            {
-                "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "token": AuthToken.objects.create(user)[1],
-            }
-        )
+        return Response(serializer.validated_data)
 
 
 # GEt User API

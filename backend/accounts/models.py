@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
 
 
 class IndividualUserManager(BaseUserManager):
-    def create_user(
+    def create_individualuser(
         self, first_name, last_name, email, username, birth_date, gender, agreement, password=None
     ):
         if email is None:
@@ -31,7 +31,7 @@ class IndividualUserManager(BaseUserManager):
 
 
 class CorporateUserManager(BaseUserManager):
-    def create_user(
+    def create_corporateuser(
         self,
         first_name,
         last_name,
@@ -61,7 +61,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(db_index=True, unique=True)
     username = models.CharField(max_length=50, null=True)
-    password = models.CharField(validators=[MinLengthValidator(4)], max_length=20)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -73,6 +72,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     ]
 
     objects = UserManager()
+
+    @property
+    def token(self):
+        dt = datetime.now() + timedelta(days=days)
+        token = jwt.encode(
+            {"id": user_id, "exp": int(time.mktime(dt.timetuple()))},
+            settings.SECRET_KEY,
+            algorithm="HS256",
+        )
+        return token.decode("utf-8")
 
     def get_full_name(self):
         return self.first_name + " " + self.last_name
