@@ -20,6 +20,7 @@ class IndividualUserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             email=self.normalize_email(email),
+            username=username,
             birth_date=birth_date,
             gender=gender,
             agreement=agreement,
@@ -31,7 +32,15 @@ class IndividualUserManager(BaseUserManager):
 
 class CorporateUserManager(BaseUserManager):
     def create_user(
-        self, first_name, last_name, email, company_registration_number, company_name, password=None
+        self,
+        first_name,
+        last_name,
+        email,
+        username,
+        company_registration_number,
+        company_name,
+        agreement,
+        password=None,
     ):
         if email is None:
             raise TypeError("Users must have an email address.")
@@ -39,8 +48,10 @@ class CorporateUserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             email=self.normalize_email(email),
+            username=username,
             company_registration_number=company_registration_number,
             company_name=company_name,
+            agreement=agreement,
         )
         Corporateuser.set_password(password)
         Corporateuser.save()
@@ -82,7 +93,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class IndividualUser(User, PermissionsMixin):
     birth_date = models.DateField()
     gender = models.CharField(max_length=10)
-    agreement = models.BooleanField()
+    agreement = models.BooleanField(null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = [
@@ -100,6 +111,7 @@ class IndividualUser(User, PermissionsMixin):
 class CorporateUser(User, PermissionsMixin):
     company_registration_number = models.IntegerField()
     company_name = models.CharField(max_length=100)
+    agreement = models.BooleanField(null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "company_registration_number", "company_name"]
