@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions
+from django.contrib.auth import authenticate
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import AllowAny
@@ -20,7 +21,15 @@ class IndividualUserRegisterAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.validated_data)
+        user = serializer.save()
+
+        return Response(
+            {
+                "user": IndividualUserSerializer(user, context=self.get_serializer_context()).data,
+                "token": serializer.data.get("token", None),
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class CorporateUserRegisterAPIView(generics.GenericAPIView):
@@ -29,7 +38,8 @@ class CorporateUserRegisterAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.validated_data)
+        serializer.save()
+        return Response(serializer.data)
 
 
 # Login API
@@ -39,7 +49,8 @@ class LoginAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.validated_data)
+        serializer.save()
+        return Response(serializer.data)
 
 
 # GEt User API

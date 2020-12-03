@@ -54,7 +54,7 @@ class CorporateUserRegisterSerializer(serializers.ModelSerializer):
 
 # Login Serializer
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    email = serializers.EmailField(write_only=True)
     password = serializers.CharField(write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
 
@@ -62,6 +62,7 @@ class LoginSerializer(serializers.Serializer):
         email = data.get("email", None)
         password = data.get("password", None)
         user = authenticate(username=email, password=password)
+        print(user, email, password)
 
         if user is None:
             raise serializers.ValidationError("A user with this email and password is not found.")

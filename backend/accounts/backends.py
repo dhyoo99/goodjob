@@ -7,6 +7,8 @@ from .models import IndividualUser, CorporateUser
 class JWTIndividualUserAuthentication(authentication.BaseAuthentication):
     authentication_header_prefix = "Token"
 
+    print("111111111111111111111111")
+
     def authenticate(self, request):
         request.user = None
         auth_header = authentication.get_authorization_header(request).split()
@@ -33,30 +35,35 @@ class JWTIndividualUserAuthentication(authentication.BaseAuthentication):
         token = auth_header[1].decode("utf-8")
 
         if prefix.lower() != auth_header_prefix:
+
             return None
+
         return self._authenticate_credentials(request, token)
 
     def _authenticate_credentials(self, request, token):
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
+
         except:
             msg = "Invalid authentication. Could not decode token."
             raise exceptions.AuthenticationFailed(msg)
 
         try:
-            individualUser = IndividualUser.objects.get(pk=payload["id"])
-        except IndividualUser.DoesNotExist:
+            # 나중에 user -> individualUser 이름 바꾸기
+            user = IndividualUser.objects.get(pk=payload["id"])
+        except user.DoesNotExist:
             msg = "No individual user matching this token was found."
             raise exceptions.AuthenticationFailed(msg)
 
-        if not individualUser.is_active:
+        if not user.is_active:
             msg = "This user has been deactivated."
             raise exceptions.AuthenticationFailed(msg)
-        return (individualUser, token)
+        return (user, token)
 
 
 class JWTCorporateUserAuthentication(authentication.BaseAuthentication):
     authentication_header_prefix = "Token"
+    print("11111111111111111111111111111111")
 
     def authenticate(self, request):
         request.user = None
