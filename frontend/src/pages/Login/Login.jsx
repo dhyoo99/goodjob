@@ -3,6 +3,7 @@ import { Form, Input, Checkbox, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+
 import { login } from '../../store/actions/auth';
 
 import './Login.scss';
@@ -26,17 +27,17 @@ const Login = ({ isAuthenticated, login }) => {
         onFinish={handleOnFinish}
       >
         <Form.Item
-          name="username"
+          name="email"
           rules={[
             {
               required: true,
-              message: 'Please input your Username!'
+              message: 'Please input your E-mail!'
             }
           ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            placeholder="E-mail"
           />
         </Form.Item>
         <Form.Item

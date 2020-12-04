@@ -14,7 +14,6 @@ class JWTUserAuthentication(authentication.BaseAuthentication):
         auth_header_prefix = self.authentication_header_prefix.lower()
 
         if not auth_header:
-            print("111111111111111111111111")
             return None
 
         # `auth_header` should be an array with two elements: 1) the name of
@@ -22,13 +21,11 @@ class JWTUserAuthentication(authentication.BaseAuthentication):
         # that we should authenticate against.
 
         if len(auth_header) == 1:
-            print("222222222222222222222222222")
             # Invalid token header. No credentials provided. Do not attempt to
             # authenticate.
             return None
 
         elif len(auth_header) > 2:
-            print("3333333333333333333333333333333")
             # Invalid token header. The Token string should not contain spaces. Do
             # not attempt to authenticate.
             return None
@@ -37,9 +34,7 @@ class JWTUserAuthentication(authentication.BaseAuthentication):
         token = auth_header[1].decode("utf-8")
 
         if prefix.lower() != auth_header_prefix:
-            print("4444444444444444444444444444444")
             return None
-        print("55555555555555555555555555555555555555")
 
         return self._authenticate_credentials(request, token)
 
@@ -56,7 +51,6 @@ class JWTUserAuthentication(authentication.BaseAuthentication):
             if not individualUser.is_active:
                 msg = "This user has been deactivated."
                 raise exceptions.AuthenticationFailed(msg)
-            print("666666666666666666666666666666666666")
             return (individualUser, token)
         except IndividualUser.DoesNotExist:
             msg = "No individual user matching this token was found."
@@ -67,23 +61,7 @@ class JWTUserAuthentication(authentication.BaseAuthentication):
             if not corporateUser.is_active:
                 msg = "This user has been deactivated."
                 raise exceptions.AuthenticationFailed(msg)
-            print("7777777777777777777777777777777777777")
             return (corporateUser, token)
         except CorporateUser.DoesNotExist:
             msg = "No user matching this token was found."
             raise exceptions.AuthenticationFailed(msg)
-
-
-# class UserAuthentication(ModelBackend):
-#     def authenticate(self, request, **kwargs):
-#         if kwargs == {}:
-#             return None
-#         print(kwargs)
-#         email = kwargs["username"]
-#         password = kwargs["password"]
-#         try:
-#             user = User.objects.get(email=email)
-#             if user.check_password(password) is True:
-#                 return user
-#         except User.DoesNotExist:
-#             pass

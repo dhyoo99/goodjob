@@ -8,8 +8,8 @@ import {
   REGISTER_FAILED
 } from './types';
 
-export const login = ({ username, password }) => async (dispatch) => {
-  const body = JSON.stringify({ username, password });
+export const login = ({ email, password }) => async (dispatch) => {
+  const body = JSON.stringify({ email, password });
   try {
     const res = await axios({
       url: 'api/auth/login',
