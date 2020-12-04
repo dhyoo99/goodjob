@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "gy5o1c7z*#vejdus8k(sp@f4je4$=%-n#re11gtaf-j+(90@re"
+# SECRET_KEY = "gy5o1c7z*#vejdus8k(sp@f4je4$=%-n#re11gtaf-j+(90@re"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,12 +44,19 @@ INSTALLED_APPS = [
     "knox",
     "accounts.apps.AccountsConfig",
     "app",
+    "django_extensions",
+]
+AUTH_USER_MODEL = "accounts.User"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "accounts.backends.JWTUserAuthentication",
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "accounts.backends.JWTIndividualUserAuthentication",
-        "accounts.backends.JWTCorporateUserAuthentication",
+        "django.contrib.auth.backends.ModelBackend",
+        "accounts.backends.JWTUserAuthentication",
     ),
 }
 

@@ -3,30 +3,30 @@ import time
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.core.validators import MinLengthValidator
+from django.db import models
+
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserManager(BaseUserManager):
-    def get_by_natural_key(self, email):
-        return self.get(email=email)
-
-    def _create_user(self, username, email, password=None, **extra_fields):
-        if not username:
-            raise ValueError("The given username must be set")
-
+    def _create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("The given email must be set")
-
         email = self.normalize_email(email)
-        user = self.model(username=username, email=email, **extra_fields)
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
 
         return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_superuser", False)
+
+        return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, username, email, password, **extra_fields):
         """
@@ -34,6 +34,7 @@ class UserManager(BaseUserManager):
         """
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")
@@ -41,7 +42,7 @@ class UserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self._create_user(username, email, password, **extra_fields)
+        return self._create_user(email, password, **extra_fields)
 
 
 class IndividualUserManager(BaseUserManager):
@@ -94,16 +95,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(db_index=True, unique=True)
-    username = models.CharField(max_length=50, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = [
-        "first_name",
-        "last_name",
-    ]
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects = UserManager()
 
@@ -123,19 +120,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
 
-    def natural_key(self):
-        return (self.first_name, self.last_name)
-
     def __str__(self):
         return self.email
 
 
 # 개인회원
 class IndividualUser(User, PermissionsMixin):
+    username = models.CharField(max_length=30)
     birth_date = models.DateField()
     gender = models.CharField(max_length=10)
-    agreement = models.BooleanField(null=True)
-
+    agreement = models.BooleanField()
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = [
         "first_name",
@@ -169,14 +163,14 @@ class CorporateUser(User, PermissionsMixin):
 #     nickname = models.CharField(max_length=20, blank=True)
 #     # 유저 기본적으로 생성되긴 하지만 우리가 필요한 것들이 뭐가 있을지?
 
-#     @receiver(post_save, sender=User)
-#     def create_user_profile(sender, instance, created, **kwargs):
-#         if created:
-#             Corporateprofile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Corporateprofile.objects.create(user=instance)
 
-#     @receiver(post_save, sender=User)
-#     def save_user_profile(sender, instance, **kwargs):
-#         instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
 
 # # 개인회원 프로필
 # class Individualprofile(models.Model):
@@ -186,11 +180,11 @@ class CorporateUser(User, PermissionsMixin):
 #     agreement = models.BooleanField()
 #     # 유저 기본적으로 생성되긴 하지만 우리가 필요한 것들이 뭐가 있을지?
 
-#     @receiver(post_save, sender=User)
-#     def create_user_profile(sender, instance, created, **kwargs):
-#         if created:
-#             Individualprofile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Individualprofile.objects.create(user=instance)
 
-#     @receiver(post_save, sender=User)
-#     def save_user_profile(sender, instance, **kwargs):
-#         instance.profile.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
