@@ -1,0 +1,32 @@
+.notice {
+  height: 100%;
+  &__advertisement {
+    height: 20vh;
+    border: 1px solid #ccc;
+  }
+  &__content {
+    height: 50vh;
+    border: 1px solid #ccc;
+  }
+  &__legalContent {
+    height: 60vh;
+    border: 1px solid #ccc;
+    display: none;
+  }
+  &__qna {
+    height: 20vh;
+    border: 1px solid #ccc;
+  }
+  &__support {
+    height: 20vh;
+    border: 1px solid #ccc;
+  }
+}
+
+@media (min-width: 992px) {
+  .notice {
+    &__legalContent {
+      display: block;
+    }
+  }
+}

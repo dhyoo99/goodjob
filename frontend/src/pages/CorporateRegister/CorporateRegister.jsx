@@ -3,7 +3,6 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 
-import './CorporateRegister.scss';
 import { corporateRegister } from '../../store/actions/auth';
 
 const formItemLayout = {

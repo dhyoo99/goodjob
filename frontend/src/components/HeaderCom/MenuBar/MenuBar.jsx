@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, Dropdown, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import './MenuBar.scss';
 
@@ -18,10 +19,25 @@ const Category = () => {
   const noticeMenu = (
     <Menu>
       <Menu.Item>
-        <a href="https://github.com/dhyoo99/goodjob">공지사항</a>
+        <Link to="/notice">전체</Link>
       </Menu.Item>
       <Menu.Item>
-        <a href="https://github.com/dhyoo99/goodjob">공지사항</a>
+        <a href="https://github.com/dhyoo99/goodjob">사무직</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href="https://github.com/dhyoo99/goodjob">서빙/주방</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href="https://github.com/dhyoo99/goodjob">교육</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href="https://github.com/dhyoo99/goodjob">IT</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href="https://github.com/dhyoo99/goodjob">디자인</a>
+      </Menu.Item>
+      <Menu.Item>
+        <a href="https://github.com/dhyoo99/goodjob">헬스</a>
       </Menu.Item>
     </Menu>
   );

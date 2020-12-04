@@ -13,7 +13,6 @@ import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import moment from 'moment';
 
-import './IndividualRegister.scss';
 import { individualRegister } from '../../store/actions/auth';
 
 const formItemLayout = {
